@@ -7,6 +7,12 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/*
+ * Purpose : MentorModel are used to transfer the data into database
+ * Version : 1.0
+ * @author : Annu Kumari
+ * */
+
 @Data
 @Entity
 @Table(name = "mentor")
@@ -25,7 +31,7 @@ public class MentorModel {
     private String preferredTime;
     private String status;
     private String mentorDescription;
-    private String profileImageURL;
+    private String profilePic;
     private int creatorUser;
     private long supervisorId;
     private LocalDateTime createdTimeStamp;
@@ -43,7 +49,7 @@ public class MentorModel {
         this.preferredTime = mentorDTO.getPreferredTime();
         this.status = mentorDTO.getStatus();
         this.mentorDescription = mentorDTO.getMentorDescription();
-        this.profileImageURL = mentorDTO.getProfileImageURL();
+        this.profilePic = mentorDTO.getProfilePic();
         this.creatorUser = mentorDTO.getCreatorUser();
         this.supervisorId = mentorDTO.getSupervisorId();
 
@@ -51,4 +57,6 @@ public class MentorModel {
 
     public MentorModel() {
     }
+
+
 }

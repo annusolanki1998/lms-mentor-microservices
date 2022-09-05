@@ -6,6 +6,13 @@ import com.bridgelabz.lmsmentorservice.util.ResponseUtil;
 
 import java.util.List;
 
+/**
+ * Purpose: Creating Interface for Admin service
+ * @author: Annu Kumari
+ * @Param:  All service methods
+ * Version: 1.0
+ */
+
 public interface IMentorService {
 
     ResponseUtil addMentor(MentorDTO mentorDTO, String token);
@@ -17,4 +24,10 @@ public interface IMentorService {
     ResponseUtil deleteMentor(String token, Long id);
 
     ResponseUtil getMentor(String token, Long id);
+
+    ResponseUtil addProfilePic(String token, String profilePic, Long id);
+
+    Long mentorsCount();
+
+    Long getMentorByRole(String mentorRole);
 }

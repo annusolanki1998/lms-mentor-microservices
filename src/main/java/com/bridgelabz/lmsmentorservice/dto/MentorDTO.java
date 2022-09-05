@@ -5,6 +5,12 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+/*
+ * Purpose : MentorDTO are used to create and update mentor details
+ * Version : 1.0
+ * @author : Annu Kumari
+ * */
+
 @Data
 public class MentorDTO {
 
@@ -46,7 +52,7 @@ public class MentorDTO {
     private String mentorDescription;
 
     @NotNull(message = "Profile image url should not be empty")
-    private String profileImageURL;
+    private String profilePic;
 
     @NotNull(message = "Creator user should not be empty")
     private int creatorUser;

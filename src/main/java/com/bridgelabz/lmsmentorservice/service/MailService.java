@@ -8,12 +8,23 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
+/*
+ * Purpose : MailService used to send an email
+ * Version : 1.0
+ * @author : Annu Kumari
+ * */
+
 @Component
 public class MailService {
+
+    /**
+     * Purpose: Creating method to send Email
+     * @author: Annu Kumari
+     * @Param: email,subject and body
+     */
     public static void send(String toEmail, String subject, String body) {
         final String fromEmail = System.getenv("Email");
-        // requires valid gmail id
-        final String password = System.getenv("mailpwd"); // correct password for gmail id
+        final String password = System.getenv("mailpwd");
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
@@ -21,8 +32,6 @@ public class MailService {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        // enable STARTTLS
-        // to check email sender credentials are valid or not
         Authenticator authenticator = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, password);

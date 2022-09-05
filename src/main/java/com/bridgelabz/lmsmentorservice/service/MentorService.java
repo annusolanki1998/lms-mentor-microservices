@@ -14,6 +14,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Purpose: Creating service for mentor
+ * @author: Annu Kumari
+ * @Param:  business logic is present here
+ * Version: 1.0
+ */
+
 @Service
 public class MentorService implements IMentorService {
     @Autowired
@@ -28,7 +35,11 @@ public class MentorService implements IMentorService {
     @Autowired
     RestTemplate restTemplate;
 
-
+    /**
+     * Purpose: Creating method to add mentor details
+     * @author: Annu Kumari
+     * @Param: mentorDto
+     */
     @Override
     public ResponseUtil addMentor(MentorDTO mentorDTO, String token) {
         boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
@@ -43,6 +54,12 @@ public class MentorService implements IMentorService {
         }
         throw new MentorNotFoundException(400, "Token is wrong");
     }
+
+    /**
+     * Purpose: Creating method to update existing mentor details
+     * @author: Annu Kumari
+     * @Param: mentorDto,id and token
+     */
 
     @Override
     public ResponseUtil updateMentor(MentorDTO mentorDTO, String token, Long id) {
@@ -61,7 +78,7 @@ public class MentorService implements IMentorService {
                 isMentorPresent.get().setPreferredTime(mentorDTO.getPreferredTime());
                 isMentorPresent.get().setStatus(mentorDTO.getStatus());
                 isMentorPresent.get().setMentorDescription(mentorDTO.getMentorDescription());
-                isMentorPresent.get().setProfileImageURL(mentorDTO.getProfileImageURL());
+                isMentorPresent.get().setProfilePic(mentorDTO.getProfilePic());
                 isMentorPresent.get().setCreatorUser(mentorDTO.getCreatorUser());
                 isMentorPresent.get().setSupervisorId(mentorDTO.getSupervisorId());
                 isMentorPresent.get().setUpdatedTimeStamp(LocalDateTime.now());
@@ -76,6 +93,12 @@ public class MentorService implements IMentorService {
         }
         throw new MentorNotFoundException(400, "Token is wrong");
     }
+
+    /**
+     * Purpose: Creating method to get mentor details
+     * @author: Annu Kumari
+     * @Param: token
+     */
 
 
     @Override
@@ -93,6 +116,12 @@ public class MentorService implements IMentorService {
 
     }
 
+    /**
+     * Purpose: Creating method to delete existing mentor details
+     * @author: Annu Kumari
+     * @Param: id and token
+     */
+
     @Override
     public ResponseUtil deleteMentor(String token, Long id) {
         boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
@@ -109,6 +138,12 @@ public class MentorService implements IMentorService {
 
     }
 
+    /**
+     * Purpose: Creating method to get admin details
+     * @author: Annu Kumari
+     * @Param: id and token
+     */
+
 
     @Override
     public ResponseUtil getMentor(String token, Long id) {
@@ -123,5 +158,56 @@ public class MentorService implements IMentorService {
         }
         throw new MentorNotFoundException(400, "Token is wrong");
     }
+
+    /**
+     * Purpose: Creating method to add proofile pic
+     * @author: Annu Kumari
+     * @Param: id ,token and profile pic
+     */
+
+    @Override
+    public ResponseUtil addProfilePic(String token, String profilePic, Long id) {
+        boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
+        if (isUserPresent) {
+            Optional<MentorModel> isMentorPresent = mentorRepository.findById(id);
+            if (isMentorPresent.isPresent()) {
+                isMentorPresent.get().setProfilePic(profilePic);
+                mentorRepository.save(isMentorPresent.get());
+                String body = "Mentor profilePic Added With Id is : " + isMentorPresent.get().getId();
+                String subject = "Mentor ProfilePic Uploaded ...";
+                mailService.send(isMentorPresent.get().getEmail(), body, subject);
+                return new ResponseUtil(200, "Successfully", isMentorPresent.get());
+            } else {
+                throw new MentorNotFoundException(400, "No profile pic url found with this id");
+            }
+        }
+        throw new MentorNotFoundException(400, "Token is wrong");
+
+    }
+
+    /**
+     * Purpose: Creating method to count existing mentor
+     * @author: Annu Kumari
+     */
+
+    @Override
+    public Long mentorsCount() {
+        Long mentorsCount = mentorRepository.mentorsCount();
+        return mentorsCount;
+    }
+
+    /**
+     * Purpose: Creating method to get existing mentor by role
+     * @author: Annu Kumari
+     * @Param: mentorRole
+     */
+
+    @Override
+    public Long getMentorByRole(String mentorRole) {
+        Long mentorCountByRole = mentorRepository.mentorsCountByRole(mentorRole);
+        return mentorCountByRole;
+    }
+
 }
+
 
