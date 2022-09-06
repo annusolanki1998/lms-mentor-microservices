@@ -42,7 +42,7 @@ public class MentorService implements IMentorService {
      */
     @Override
     public ResponseUtil addMentor(MentorDTO mentorDTO, String token) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://EUREKA-ADMIN-CLIENT:8081/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             MentorModel mentorModel = new MentorModel(mentorDTO);
             mentorModel.setCreatedTimeStamp(LocalDateTime.now());
@@ -63,7 +63,7 @@ public class MentorService implements IMentorService {
 
     @Override
     public ResponseUtil updateMentor(MentorDTO mentorDTO, String token, Long id) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://EUREKA-ADMIN-CLIENT:8081/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             Optional<MentorModel> isMentorPresent = mentorRepository.findById(id);
             if (isMentorPresent.isPresent()) {
@@ -103,7 +103,7 @@ public class MentorService implements IMentorService {
 
     @Override
     public List<MentorModel> getMentors(String token) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://EUREKA-ADMIN-CLIENT:8081/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             List<MentorModel> isMentorPresent = mentorRepository.findAll();
             if (isMentorPresent.size() > 0) {
@@ -124,7 +124,7 @@ public class MentorService implements IMentorService {
 
     @Override
     public ResponseUtil deleteMentor(String token, Long id) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://EUREKA-ADMIN-CLIENT:8081/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             Optional<MentorModel> isMentorPresent = mentorRepository.findById(id);
             if (isMentorPresent.isPresent()) {
@@ -147,7 +147,7 @@ public class MentorService implements IMentorService {
 
     @Override
     public ResponseUtil getMentor(String token, Long id) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http:/EUREKA-ADMIN-CLIENT:8081/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             Optional<MentorModel> isMentorPresent = mentorRepository.findById(id);
             if (isMentorPresent.isPresent()) {
@@ -167,7 +167,7 @@ public class MentorService implements IMentorService {
 
     @Override
     public ResponseUtil addProfilePic(String token, String profilePic, Long id) {
-        boolean isUserPresent = restTemplate.getForObject("http://localhost:8081/admin/validate/" + token, Boolean.class);
+        boolean isUserPresent = restTemplate.getForObject("http://EUREKA-ADMIN-CLIENT:8081/admin/validate/" + token, Boolean.class);
         if (isUserPresent) {
             Optional<MentorModel> isMentorPresent = mentorRepository.findById(id);
             if (isMentorPresent.isPresent()) {
